@@ -10,6 +10,11 @@ public class CharacterWordReducer extends Reducer<Text, IntWritable, Text, IntWr
 
     @Override
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-
+        int sum = 0;
+        // Sum all occurrences of each word for the given character
+        for (IntWritable val : values) {
+            sum += val.get();
+        }
+        context.write(key, new IntWritable(sum));  // Emit word count for the character
     }
 }
